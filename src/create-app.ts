@@ -1,9 +1,10 @@
 #!/usr/bin/env node
 import {App} from 'aws-cdk-lib';
 
-import {RestApiStack} from './rest-api/rest-api.stack.js';
+import {RestApiStack} from './rest-api/stack.js';
 import {CertificateStack} from './certificate/certificate.stack.js';
 import {domainName, stage, subdomain} from './config.js';
+import {VideoStack} from './video/stack.js';
 
 const app = new App();
 
@@ -18,6 +19,8 @@ const certStack = new CertificateStack(app, `Certificate-${stage}`, {
     subdomain,
 });
 
+export const videoStorageStack = new VideoStack(app, `VideoStorageStack-${stage}`);
+
 export const stack = new RestApiStack(app, `RestAPIStack-${stage}`, {
     env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
     crossRegionReferences: true,
@@ -25,4 +28,8 @@ export const stack = new RestApiStack(app, `RestAPIStack-${stage}`, {
     certStack,
     domainName,
     subdomain,
+    storageBucket: videoStorageStack.s3Bucket,
+    storageBucketRegion: videoStorageStack.region,
 });
+
+

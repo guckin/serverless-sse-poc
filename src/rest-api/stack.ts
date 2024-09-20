@@ -7,6 +7,7 @@ import {ApiGateway} from 'aws-cdk-lib/aws-route53-targets';
 import {CertificateStack} from '../certificate/certificate.stack.js';
 import {NodejsFunction} from 'aws-cdk-lib/aws-lambda-nodejs';
 import {bundlingOptions, nodeRuntime} from '../config.js';
+import { Bucket } from 'aws-cdk-lib/aws-s3';
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 export type RestApiStackProps = StackProps & {
@@ -14,6 +15,8 @@ export type RestApiStackProps = StackProps & {
   certStack: CertificateStack,
   subdomain: string,
   domainName: string,
+  storageBucket: Bucket;
+  storageBucketRegion: string;
 };
 
 export class RestApiStack extends Stack {
@@ -25,7 +28,11 @@ export class RestApiStack extends Stack {
       handler: 'handler',
       timeout: Duration.seconds(100),
       runtime: nodeRuntime,
-      bundling: bundlingOptions
+      bundling: bundlingOptions,
+      environment: {
+        STORAGE_BUCKET_NAME: props.storageBucket.bucketName,
+        STORAGE_BUCKET_REGION: props.storageBucketRegion
+      }
     });
 
     const lambdaIntegration = new LambdaIntegration(fn);
