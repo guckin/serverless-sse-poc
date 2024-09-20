@@ -24,7 +24,7 @@ export class RestApiStack extends Stack {
     super(scope, id, props);
 
     const fn = new NodejsFunction(this, 'RestApiHandler', {
-      entry: path.join(__dirname, './rest-api-handler.js'),
+      entry: path.join(__dirname, './handler.js'),
       handler: 'handler',
       timeout: Duration.seconds(100),
       runtime: nodeRuntime,
