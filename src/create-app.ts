@@ -19,7 +19,7 @@ const certStack = new CertificateStack(app, `Certificate-${stage}`, {
     subdomain,
 });
 
-export const videoStorageStack = new VideoStack(app, `VideoStorageStack-${stage}`);
+export const videoStorageStack = new VideoStack(app, `VideoStack-${stage}`);
 
 export const stack = new RestApiStack(app, `RestAPIStack-${stage}`, {
     env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },

@@ -10,6 +10,7 @@ export class VideoStack extends Stack {
     super(scope, id);
     this.s3Bucket = new Bucket(this, 'VideoStorageBucket', {
       removalPolicy: RemovalPolicy.DESTROY,
+      bucketName: 'video-storage-bucket',
     });
   }
 
