@@ -6,11 +6,12 @@ export class VideoStack extends Stack {
 
   public readonly s3Bucket: Bucket;
 
-  constructor(scope: Construct, id: string) {
+  constructor(scope: Construct, id: string, props: {stage: string}) {
     super(scope, id);
     this.s3Bucket = new Bucket(this, 'VideoStorageBucket', {
       removalPolicy: RemovalPolicy.DESTROY,
-      bucketName: 'video-storage-bucket',
+      autoDeleteObjects: true,
+      bucketName: `video-storage-bucket-${props.stage}`,
     });
   }
 
