@@ -8,7 +8,7 @@ import {VideoStack} from './video/stack.js';
 
 const app = new App();
 
-const certStack = new CertificateStack(app, `Certificate-${stage}`, {
+const certStack = new CertificateStack(app, `Video-App-Certificate-${stage}`, {
     stage,
     env: {
         account: process.env.CDK_DEFAULT_ACCOUNT,
